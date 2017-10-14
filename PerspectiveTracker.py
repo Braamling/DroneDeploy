@@ -1,9 +1,5 @@
 import numpy as np
 import cv2
-import math
-from matplotlib import pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
 class PerspectiveTracker():
 
@@ -53,7 +49,7 @@ class PerspectiveTracker():
 
         self.src_points = np.asarray(src_points)
 
-        # 'translate' the pattern image to a 3d plane.
+        # 'translate' the pattern image to a 3d plane by adding a z axis
         self.dst_points = np.asarray(dst_points)[:, :, np.newaxis] 
 
     """
@@ -74,5 +70,3 @@ class PerspectiveTracker():
         euler_angles_radians = -cv2.decomposeProjectionMatrix(P)[6]
 
         return euler_angles_radians, cam_pos
-
-

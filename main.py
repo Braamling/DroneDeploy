@@ -11,6 +11,9 @@ class Config():
     # This was solved by scaling both translation and objects.
     scale = 15
 
+    # Display size of the PyGame window.
+    display_size = (800, 600)
+
     # The two input images
     pattern_path = 'images/pattern.png'
     image_path = 'images/IMG_6723.JPG'
@@ -26,6 +29,7 @@ class Config():
 
     The code has been submitted as part of the DroneDeploy code interview
     """
+
 
 def main():
     config = Config()

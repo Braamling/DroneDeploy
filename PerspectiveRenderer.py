@@ -12,16 +12,15 @@ class PerspectiveRenderer():
         self.initOpenGL()
         self.createSurfaceTexture()
 
-        # self.render()
-
     def initOpenGL(self):
         glutInit(sys.argv)
         pygame.init()
-        display = (800,600)
-        pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
+
+        pygame.display.set_mode(self.config.display_size, DOUBLEBUF|OPENGL)
         gluPerspective(100, 1, 1, 100)
 
-        
+
+    """ Initialize the pattern texture in OpenGL """
     def createSurfaceTexture(self):
         img = pygame.image.load(self.config.pattern_path)
         textureData = pygame.image.tostring(img, "RGB", 1)
@@ -39,35 +38,35 @@ class PerspectiveRenderer():
         self.image_x = width / self.config.scale
         self.image_y = height / self.config.scale
 
+    """ Render a flat surface with the pattern as texture """ 
     def renderSurface(self):
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
         glBegin(GL_QUADS)
-        glTexCoord2f(0,1)
-        glVertex3f(0,  self.image_y, 0)
         glTexCoord2f(0,0)
         glVertex3f(0, 0, 0)
         glTexCoord2f(1,0)
         glVertex3f(self.image_x, 0, 0)
         glTexCoord2f(1,1)
         glVertex3f(self.image_x,  self.image_y, 0) 
+        glTexCoord2f(0,1)
+        glVertex3f(0,  self.image_y, 0)
         glEnd()
         glFlush()
         glDisable(GL_TEXTURE_2D)
 
+    """ Reconstruct the original scene by positioning the camera at the same location """
     def positionCamera(self, rvec, tvec):
-        # glTranslatef(-288/self.config.scale, 199/self.config.scale, -1126/self.config.scale)
-
-        # glRotate(-10, 1, 0, 0)
-        # glRotate(-7.89, 0, 1, 0)
-        # glRotate(129.87, 0, 0, 1)
+        # Move the camera in position.
         glTranslatef(tvec[0] / self.config.scale, 
                      tvec[1] / self.config.scale, 
                      tvec[2] / self.config.scale)
 
+        # Point the camera to the right location.
         glRotate(rvec[0], 1, 0, 0)
         glRotate(rvec[1], 0, 1, 0)
         glRotate(rvec[2], 0, 0, 1)
 
+    """ Render the constructed scene in OpenGL """
     def render(self):
         self.renderSurface()
 

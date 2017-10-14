@@ -1,0 +1,6 @@
+PyOpenGL==3.1.0
+PyOpenGL-accelerate==3.1.0
+pygame==1.9.3
+opencv-contrib-python==3.3.0.10
+opencv-python==3.3.0.10
+numpy==1.13.3
